@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Configure Regression Model</title>
+
+<link rel="stylesheet"
+href="{{url_for('static',filename='style.css')}}">
+
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<div class="top-header">
+
+<h1>Configure Regression Model</h1>
+
+</div>
+
+
+
+<div class="container">
+
+<form action="/run_model" method="POST">
+
+
+<!-- ================= MODEL SETTINGS BOX ================= -->
+
+<div class="card model-box">
+
+<h2>Model Configuration</h2>
+
+<div class="form-grid">
+
+<div>
+
+<label>Model Type</label>
+
+<select name="model_type">
+
+<option value="SLR">Simple Linear Regression</option>
+<option value="MLR">Multiple Linear Regression</option>
+<option value="LOGISTIC">Logistic Regression</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Dependent Variable</label>
+
+<select name="y">
+
+{% for c in columns %}
+<option value="{{c}}">{{c}}</option>
+{% endfor %}
+
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ================= FEATURE BOX ================= -->
+
+<div class="card feature-box">
+
+<h2>Select Predictor Variables</h2>
+
+
+<div class="controls">
+
+<button type="button" onclick="selectAll()">
+Select All
+</button>
+
+<button type="button" onclick="clearAll()">
+Clear All
+</button>
+
+</div>
+
+
+
+<div class="grid">
+
+{% for c in columns %}
+
+<label class="feature-item">
+
+<input type="checkbox"
+name="x"
+value="{{c}}"
+class="predictor">
+
+{{c}}
+
+</label>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+
+
+<div class="button-row">
+
+<button class="run">
+Run Model
+</button>
+
+<button type="button"
+onclick="history.back()"
+class="back">
+
+Back
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+
+
+<script>
+
+function selectAll(){
+
+let boxes=document.querySelectorAll(".predictor")
+
+boxes.forEach(b=>b.checked=true)
+
+}
+
+function clearAll(){
+
+let boxes=document.querySelectorAll(".predictor")
+
+boxes.forEach(b=>b.checked=false)
+
+}
+
+</script>
+
+</body>
+
+</html>

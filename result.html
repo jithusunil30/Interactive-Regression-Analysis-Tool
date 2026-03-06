@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Model Results</title>
+
+<link rel="stylesheet"
+href="{{url_for('static',filename='style.css')}}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Regression Analysis Results</h1>
+
+<div class="card">
+
+<h2>Regression Equation</h2>
+
+<p>{{result.equation}}</p>
+
+</div>
+
+<div class="card">
+
+<h2>Model Summary</h2>
+
+{{result.summary|safe}}
+
+</div>
+
+{% if result.type!="LOGISTIC" %}
+
+<div class="card">
+
+<h2>Model Statistics</h2>
+
+<p>R² : {{result.r2}}</p>
+
+<p>Adjusted R² : {{result.adj_r2}}</p>
+
+<p>F Statistic : {{result.F_cal}}</p>
+
+<p>F Table Value : {{result.F_table}}</p>
+
+</div>
+
+<div class="card">
+
+<h2>Diagnostic Plots</h2>
+
+<img src="/static/residual.png" width="400">
+
+<img src="/static/qqplot.png" width="400">
+
+</div>
+
+{% endif %}
+
+{% if result.type=="LOGISTIC" %}
+
+<div class="card">
+
+<h2>Likelihood Ratio Test</h2>
+
+<p>Log Likelihood (Full) : {{result.LL_full}}</p>
+
+<p>Log Likelihood (Null) : {{result.LL_null}}</p>
+
+<p>LR Statistic : {{result.LR}}</p>
+
+<p>Chi Square Table : {{result.chi_table}}</p>
+
+<p>ROC AUC : {{result.auc}}</p>
+
+</div>
+
+<div class="card">
+
+<h2>Confusion Matrix</h2>
+
+<table>
+
+<tr>
+<th></th>
+<th>Pred 0</th>
+<th>Pred 1</th>
+</tr>
+
+<tr>
+<th>Actual 0</th>
+<td>{{result.confusion[0][0]}}</td>
+<td>{{result.confusion[0][1]}}</td>
+</tr>
+
+<tr>
+<th>Actual 1</th>
+<td>{{result.confusion[1][0]}}</td>
+<td>{{result.confusion[1][1]}}</td>
+</tr>
+
+</table>
+
+</div>
+
+{% endif %}
+
+</div>
+<button type="button"
+onclick="history.back()"
+class="back">
+
+Back
+
+</button>
+
+</div>
+</body>
+
+</html>
